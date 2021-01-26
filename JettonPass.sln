@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{60F2558D-FAD1-4D9D-863A-22FBE9E9B214}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{63802688-1C89-481D-AE5F-16C7706FCED1}"
+ProjectSection(SolutionItems) = preProject
+	.travis.yml = .travis.yml
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{8A8553AA-C3B2-44AC-A57F-C039A0AD8950}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "commons", "commons", "{14243401-9F32-4852-A8EF-D5B45E0CEB6B}"
+ProjectSection(SolutionItems) = preProject
+	.editorconfig = .editorconfig
+	.gitattributes = .gitattributes
+	.gitignore = .gitignore
+EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "src\App\App.csproj", "{D6400F80-822F-4520-97EC-746DC9CE4146}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D6400F80-822F-4520-97EC-746DC9CE4146} = {60F2558D-FAD1-4D9D-863A-22FBE9E9B214}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6400F80-822F-4520-97EC-746DC9CE4146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6400F80-822F-4520-97EC-746DC9CE4146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6400F80-822F-4520-97EC-746DC9CE4146}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6400F80-822F-4520-97EC-746DC9CE4146}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,9 @@
+language: csharp
+mono: none
+dotnet: 5.0.2
+solution: JettonPass.sln
+before_script:
+  - dotnet restore
+script:
+  - dotnet build JettonPass.sln -c Release
+  - dotnet test JettonPass.sln
