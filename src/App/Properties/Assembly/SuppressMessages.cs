@@ -9,3 +9,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Don't nest types", "CA1034")]
 [assembly: SuppressMessage("Type is an inner class that is never instantiated", "CA1812")]
 [assembly: SuppressMessage("Change to call new Uri() instead of string", "CA2234")]
+[assembly: SuppressMessage("Random is an unsafe random number generator", "CA5394")]

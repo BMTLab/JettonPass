@@ -14,6 +14,7 @@ namespace JettonPass.App.Forms
     {
         public enum GetWindowLongConst
         {
+            NONE = 0,
             GWL_WNDPROC = -4,
             GWL_HINSTANCE = -6,
             GWL_HWNDPARENT = -8,
@@ -52,6 +53,8 @@ namespace JettonPass.App.Forms
             backWorker.DoWork += DoWork;
 
             backWorker.RunWorkerAsync();
+
+            throw new ApplicationException(@"Cusom exception");
         }
 
 
@@ -175,7 +178,7 @@ namespace JettonPass.App.Forms
         }
 
 
-        private void DoWork(object sender, DoWorkEventArgs e)
+        private void DoWork(object? sender, DoWorkEventArgs e)
         {
             //var worker = sender as BackgroundWorker;
 
@@ -216,6 +219,8 @@ namespace JettonPass.App.Forms
 
 
         [Flags]
+        [SuppressMessage("ReSharper", "CA1069")]
+        [SuppressMessage("ReSharper", "UnusedMember.Local")]
         private enum WindowStyles : uint
         {
             WS_OVERLAPPED = 0x00000000,
