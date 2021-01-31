@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("JettonPass (App)")]
+[assembly: AssemblyTitle("Serial Port Listener")]
 [assembly: AssemblyProduct("JettonPass")]
 [assembly: AssemblyMetadata("Default OS", "Windows7")]
 [assembly: AssemblyCompany("BMTLab")]
@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyFileVersion("1.0")]
 [assembly: AssemblyInformationalVersion("1.0")]
-[assembly: AssemblyDescription("Application for time management through the use of jettons")]
+[assembly: AssemblyDescription("RS232 listener for receiving a coin toss event")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #elif RELEASE

@@ -1,0 +1,8 @@
+﻿{
+  "TimeManagerOptions": {
+    "TimeAfterStartMinutes": 5,
+    "JettonCostMinutes": 10,
+    "SubtractingTimeEnabled": true,
+    "TimeRunsOutThresholdMinutes": 3
+  }
+}

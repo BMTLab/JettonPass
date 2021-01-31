@@ -13,4 +13,3 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Not used the DefaultDllImportSearchPaths attribute for P/Invokes", "CA5392")]
 [assembly: SuppressMessage("Tag assemblies with CLSCompliantAttribute", "CA1014")]
 [assembly: SuppressMessage("Search for the following rows in the resource table", "CA1303")]
-

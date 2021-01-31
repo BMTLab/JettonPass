@@ -1,0 +1,34 @@
+﻿{
+  "AppManagerOptions": {
+    "UseBasePath": true,
+    "BasePath": "C:/Games",
+    "SearchInSubfolders": true,
+    "CustomPaths": []
+  },
+  "TimeManagerOptions": {
+    "TimeAfterStartMinutes": 0,
+    "JettonCostMinutes": 10,
+    "SubtractingTimeEnabled": true,
+    "TimeRunsOutThresholdMinutes": 5
+  },
+  "SerialPortReceiverOptions": {
+    "TrackingPin": "Cd",
+    "OnFrontSignal": false
+  },
+  "SerialPortOptions": {
+    "PortName": "COM1",
+    "BaudRate": 9600,
+    "ReadBufferSize": 8,
+    "WriteBufferSize": 8,
+    "DtrEnable": true,
+    "RtsEnable": true,
+    "Priority": 20,
+    "Filter": 40,
+    "TrackedPins": {
+      "Cd": true,
+      "Dtr": false,
+      "Cts": false,
+      "Dsr": false
+    }
+  }
+}
