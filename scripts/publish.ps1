@@ -10,5 +10,5 @@ New-Item -ItemType Directory -Force -Path $output
 
 
 $projects | %{
-    & $dotnet publish --no-restore --no-build --verbosity normal $_ -c Release -o ("{0}\{1}" -f $_,$output)
+    & $dotnet publish --verbosity normal $_ -c Release -o ("{0}\{1}" -f $_,$output)
 }
