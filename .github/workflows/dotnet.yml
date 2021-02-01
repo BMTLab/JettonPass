@@ -49,7 +49,7 @@ jobs:
       if: steps.publish.outputs.exit_code == 0
       uses: actions/upload-artifact@master
       with:
-        name: JettonPass.zip
+        name: JettonPass
         path: ${{ github.workspace }}\Publish
                 
     - name: Bump version and push tag
