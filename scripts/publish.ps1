@@ -7,10 +7,10 @@ $projects = @(
     "..\src\SerialPortListener"
 )
 
-New-Item -ItemType Directory -Force -Path $output -Confirm:$true
+New-Item -ItemType Directory -Force -Path $output
 
 # Clear previous releases
-Remove-Item "$output\*" -Recurse -Confirm:$true
+Remove-Item "$output\*" -Recurse
 
 $projects | %{
     & $dotnet publish $_ -c Release -o ("{0}\{1}" -f $_,$output)
