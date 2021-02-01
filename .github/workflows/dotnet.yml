@@ -90,7 +90,7 @@ jobs:
         asset_content_type: application/zip
 
 #     - name: Upload SerialPortListener Release Asset
-# f      if: steps.publish.outputs.exit_code == 0
+#       if: steps.publish.outputs.exit_code == 0
 #       uses: actions/upload-release-asset@v1
 #       env:
 #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
