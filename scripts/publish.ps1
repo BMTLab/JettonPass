@@ -1,5 +1,4 @@
-﻿$solution = "..\"
-$output = "\bin\Publish"
+﻿$output = "\bin\Publish"
 $dotnet = "C:\Program Files\dotnet\dotnet.exe"
 
 $projects = @(
@@ -9,9 +8,7 @@ $projects = @(
 
 New-Item -ItemType Directory -Force -Path $output
 
-# Clear previous releases
-# Remove-Item "$output\*" -Recurse
 
 $projects | %{
-    & $dotnet publish $_ -c Release -o ("{0}\{1}" -f $_,$output)
+    & $dotnet publish --no-restore --no-build --verbosity normal $_ -c Release -o ("{0}\{1}" -f $_,$output)
 }

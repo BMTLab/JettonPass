@@ -4,9 +4,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{60F2558D-FAD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{63802688-1C89-481D-AE5F-16C7706FCED1}"
 ProjectSection(SolutionItems) = preProject
-	.travis.yml = .travis.yml
 	scripts\publish.ps1 = scripts\publish.ps1
 	scripts\clean.ps1 = scripts\clean.ps1
+	scripts\build.ps1 = scripts\build.ps1
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{8A8553AA-C3B2-44AC-A57F-C039A0AD8950}"
@@ -25,6 +25,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "src\App\App.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPortListener", "src\SerialPortListener\SerialPortListener.csproj", "{9F74814F-F8A6-4F5C-A049-D963DB8FCD16}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflow", "workflow", "{B2C9A002-BED9-48F2-A719-3D5E05DBC47F}"
+ProjectSection(SolutionItems) = preProject
+	.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D6400F80-822F-4520-97EC-746DC9CE4146} = {60F2558D-FAD1-4D9D-863A-22FBE9E9B214}
 		{9F74814F-F8A6-4F5C-A049-D963DB8FCD16} = {60F2558D-FAD1-4D9D-863A-22FBE9E9B214}
+		{B2C9A002-BED9-48F2-A719-3D5E05DBC47F} = {63802688-1C89-481D-AE5F-16C7706FCED1}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D6400F80-822F-4520-97EC-746DC9CE4146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
