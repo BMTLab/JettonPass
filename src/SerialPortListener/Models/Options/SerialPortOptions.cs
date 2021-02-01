@@ -10,7 +10,7 @@ using NullGuard;
 namespace JettonPass.SerialPortListener.Models.Options
 {
     [NullGuard(ValidationFlags.None)]
-    public sealed class SerialPortOptions
+    public record SerialPortOptions
     {
         public string PortName { get; init; } = string.Empty;
         public int BaudRate { get; init; }
@@ -20,6 +20,6 @@ namespace JettonPass.SerialPortListener.Models.Options
         public bool RtsEnable { get; init; }
         public int Priority { get; init; }
         public int Filter { get; init; }
-        public Dictionary<PinType, bool> TrackedPins { get; [UsedImplicitly] init; } = default!;
+        public IDictionary<PinType, bool> TrackedPins { get; [UsedImplicitly] init; } = default!;
     }
 }

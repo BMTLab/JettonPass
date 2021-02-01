@@ -16,7 +16,7 @@
     "OnFrontSignal": false
   },
   "SerialPortOptions": {
-    "PortName": "COM1",
+    "PortName": "Auto",
     "BaudRate": 9600,
     "ReadBufferSize": 8,
     "WriteBufferSize": 8,

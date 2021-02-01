@@ -5,15 +5,19 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net5.0</TargetFramework>
         <Nullable>enable</Nullable>
-        <IsPublishable>true</IsPublishable>
-
+        
         <RuntimeIdentifier>win7-x64-aot</RuntimeIdentifier>
+        <IsPublishable>true</IsPublishable>
+        <InvariantGlobalization>true</InvariantGlobalization>
+
+        <AssemblyName>SerialPortListener</AssemblyName>
         <RootNamespace>JettonPass.SerialPortListener</RootNamespace>
         <Authors>BMTLab</Authors>
         <PackageTags>JettonPass</PackageTags>
         <PackageReleaseNotes>Alpha</PackageReleaseNotes>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <Deterministic>false</Deterministic>
+        <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
 
         <NoWarn>NU1603,NU1605,NU1701,NU1702</NoWarn>
 
@@ -40,7 +44,7 @@
         <SelfContained>true</SelfContained>
         <PublishReadyToRun>true</PublishReadyToRun>
         <PublishSingleFile>true</PublishSingleFile>
-        <PublishTrimmed>false</PublishTrimmed>
+        <PublishTrimmed>true</PublishTrimmed>
     </PropertyGroup>
 
     <ItemGroup>
@@ -53,6 +57,9 @@
         <PackageReference Include="NullGuard.Fody" Version="3.0.0">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
+        <PackageReference Include="Visualize.Fody" Version="1.2.0">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
         <PackageReference Include="Fody" Version="6.3.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -60,9 +67,6 @@
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
         <PackageReference Include="System.IO.Ports" Version="5.0.0" />
         <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.0-preview.18571.3" />
-        <PackageReference Include="Visualize.Fody" Version="1.2.0">
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
         <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
             <PrivateAssets>all</PrivateAssets>
@@ -72,6 +76,14 @@
 
     <ItemGroup>
       <Folder Include="Properties" />
+    </ItemGroup>
+
+    <Target Name="MessageTarget" BeforeTargets="Build">
+        <Message Importance="High" Text="SerialPortListner is building" />
+    </Target>
+    
+    <ItemGroup>
+        <EditorConfigFiles Update="../../.editorconfig" />
     </ItemGroup>
 
 </Project>

@@ -4,7 +4,7 @@
 namespace JettonPass.App.Models.Options
 {
     [NullGuard(ValidationFlags.None)]
-    public sealed class TimeManagerOptions
+    public sealed record TimeManagerOptions
     {
         public double TimeAfterStartMinutes { get; init; }
         public double JettonCostMinutes { get; init; }

@@ -10,6 +10,7 @@
         
         <RuntimeIdentifier>win7-x64-aot</RuntimeIdentifier>
         <InvariantGlobalization>false</InvariantGlobalization>
+        <NeutralLanguage>ru</NeutralLanguage>
         
         <AssemblyName>JettonPass</AssemblyName>
         <RootNamespace>JettonPass.App</RootNamespace>
@@ -18,6 +19,7 @@
         <PackageReleaseNotes>Alpha</PackageReleaseNotes>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <Deterministic>false</Deterministic>
+        <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
 
         <NoWarn>NU1603,NU1605,NU1701,NU1702</NoWarn>
 
@@ -40,10 +42,10 @@
         <Optimize>true</Optimize>
 
         <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-        <SelfContained>false</SelfContained>
-        <PublishReadyToRun>false</PublishReadyToRun>
-        <PublishSingleFile>false</PublishSingleFile>
-        <PublishTrimmed>false</PublishTrimmed>
+        <SelfContained>true</SelfContained>
+        <PublishReadyToRun>true</PublishReadyToRun>
+        <PublishSingleFile>true</PublishSingleFile>
+        <PublishTrimmed>true</PublishTrimmed>
     </PropertyGroup>
 
     <ItemGroup>
@@ -54,13 +56,10 @@
         <PackageReference Include="MethodTimer.Fody" Version="3.1.2">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
         <PackageReference Include="NullGuard.Fody" Version="3.0.0">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Visualize.Fody" Version="1.2.0">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="Fody" Version="6.3.0">
@@ -68,10 +67,14 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
         <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.0-preview.18571.3" />
-        <PackageReference Include="Visualize.Fody" Version="1.2.0">
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
+
         <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
             <PrivateAssets>all</PrivateAssets>
@@ -112,5 +115,13 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SerialPortListener\SerialPortListener.csproj" />
+    </ItemGroup>
+
+    <Target Name="MessageTarget" BeforeTargets="Build">
+        <Message Importance="High" Text="App is building" />
+    </Target>
+
+    <ItemGroup>
+        <EditorConfigFiles Update="../../.editorconfig" />
     </ItemGroup>
 </Project>

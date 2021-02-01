@@ -66,7 +66,7 @@ namespace JettonPass.App.Services.Managers
         }
 
         public TimeSpan JettonCost { get; }
-        public bool NoTime { get; private set; }
+        public bool NoTime { get; private set; } = true;
         #endregion _Properties
 
 
@@ -112,7 +112,7 @@ namespace JettonPass.App.Services.Managers
             
             if (_isNotifiedEndTime && !NoTime)
             {
-                _isNotifiedEndTime = true;
+                _isNotifiedEndTime = false;
             }
         }
         

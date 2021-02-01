@@ -51,22 +51,17 @@ namespace JettonPass.SerialPortListener
 
         
         #region Ctors
-        /*public SerialPortSwitch() : this(new SerialPortOptions { PortName = SerialPort.GetPortNames().FirstOrDefault()! })
-        {
-            if (!IsAnyPortsOnSystem())
-                throw new IOException(@"No ports connected in the system");
-        }*/
-
-
         public SerialPortSwitch(SerialPortOptions options)
         {
             if (!IsAnyPortsOnSystem())
                 throw new IOException(@"No ports connected in the system");
-            
-            if (string.IsNullOrWhiteSpace(options.PortName))
-                throw new ArgumentNullException(nameof(options.PortName), @"Port name is null or empty");
-            
-            Port.PortName = options.PortName;
+
+            var portName = options.PortName;
+
+            if (string.IsNullOrWhiteSpace(options.PortName) || options.PortName.Equals("Auto", StringComparison.CurrentCultureIgnoreCase))
+                portName = SerialPort.GetPortNames()[0];
+
+            Port.PortName = portName;
             Port.BaudRate = options.BaudRate;
             Port.Parity = Parity.None;
             Port.DataBits = 8;

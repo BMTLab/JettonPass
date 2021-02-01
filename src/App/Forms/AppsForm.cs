@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Forms;
 
 using JettonPass.App.Controls;
@@ -30,6 +29,8 @@ namespace JettonPass.App.Forms
             {
                 appsContainer?.Controls.Add(new AppControl(app));
             }
+            
+            SetControlsBlocked();
         }
         #endregion _Ctors
 
@@ -37,10 +38,7 @@ namespace JettonPass.App.Forms
         #region Methods
         private void ManagerOnTimeEnd(object? sender, EventArgs _)
         {
-            foreach (AppControl control in appsContainer.Controls)
-            {
-                control.IsBlocked = true;
-            }
+            SetControlsBlocked();
         }
         
         
@@ -52,6 +50,15 @@ namespace JettonPass.App.Forms
             foreach (AppControl control in appsContainer.Controls)
             {
                 control.IsBlocked = false;
+            }
+        }
+
+
+        private void SetControlsBlocked()
+        {
+            foreach (AppControl control in appsContainer.Controls)
+            {
+                control.IsBlocked = true;
             }
         }
         #endregion _Methods

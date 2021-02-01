@@ -47,6 +47,7 @@ namespace JettonPass.App.Forms
             SetTheLayeredWindowAttribute(Handle);
             
             UpdateLabel(_timeManager.LeftTime);
+            
             TopMost = true;
         }
         #endregion _Ctors

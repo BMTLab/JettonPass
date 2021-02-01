@@ -6,7 +6,7 @@ using NullGuard;
 namespace JettonPass.App.Models.Options
 {
     [NullGuard(ValidationFlags.None)]
-    public sealed class AppManagerOptions
+    public sealed record AppManagerOptions
     {
         public bool UseBasePath { get; init; }
         public string? BasePath { get; init; }
