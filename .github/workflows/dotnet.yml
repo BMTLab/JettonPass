@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     
-    runs-on: 'windows-latest'
+    runs-on: 'windows-2016'
 
     steps:
     - uses: actions/checkout@v2
@@ -49,8 +49,8 @@ jobs:
       if: steps.publish.outputs.exit_code == 0
       uses: actions/upload-artifact@v2
       with:
-        name: App
-        path: ${{ github.workspace }}\Publish\
+        name: JettonPass
+        path: ${{ github.workspace }}\Publish
                 
     - name: Bump version and push tag
       id: tag_version
@@ -75,7 +75,7 @@ jobs:
       id: artifacts
       uses: actions/download-artifact@v1
       with:
-        name: App
+        name: JettonPass.zip
         path: ./
         
     - name: Upload Release Asset
@@ -85,6 +85,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: App.zip
-        asset_name: App.zip
+        asset_path: JettonPass.zip
+        asset_name: JettonPass.zip
         asset_content_type: application/zip
