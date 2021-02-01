@@ -45,6 +45,7 @@ jobs:
         pwsh
         
     - name: Upload App Publish Artifact
+      id: upload_app
       if: steps.publish.outputs.exit_code == 0
       uses: actions/upload-artifact@v2
       with:
@@ -52,6 +53,7 @@ jobs:
         path: ${{ github.workspace }}\src\App\bin\Publish\
         
     - name: Upload SerialPortListener Publish Artifact
+      id: upload_serial
       if: steps.publish.outputs.exit_code == 0
       uses: actions/upload-artifact@v2
       with:
@@ -66,6 +68,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Create a GitHub release
+      id: create_release
       if: steps.publish.outputs.exit_code == 0
       uses: actions/create-release@v1
       env:
@@ -74,3 +77,27 @@ jobs:
         tag_name: ${{ steps.tag_version.outputs.new_tag }}
         release_name: Release ${{ steps.tag_version.outputs.new_tag }}
         body: ${{ steps.tag_version.outputs.changelog }}
+        
+    - name: Upload Release Asset
+      id: upload-release-asset
+      if: steps.publish.outputs.exit_code == 0
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: ${{ github.workspace }}\src\App\bin\Publish\
+        asset_name: App.zip
+        asset_content_type: application/zip
+
+     - name: Upload Release Asset
+       id: upload-release-asset
+       if: steps.publish.outputs.exit_code == 0
+       uses: actions/upload-release-asset@v1
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       with:
+         upload_url: ${{ steps.create_release.outputs.upload_url }}
+         asset_path: ${{ github.workspace }}\src\SerialPortListener\bin\Publish\
+         asset_name: SerialPortListener.zip
+         asset_content_type: application/zip
