@@ -78,6 +78,18 @@ jobs:
         release_name: Release ${{ steps.tag_version.outputs.new_tag }}
         body: ${{ steps.tag_version.outputs.changelog }}
         
+    - name: Download the App artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: App
+        path: ./
+        
+    - name: Download the SerialPortListener artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: SerialPortListener
+        path: ./
+        
     - name: Upload App Release Asset
       if: steps.publish.outputs.exit_code == 0
       uses: actions/upload-release-asset@v1
@@ -85,17 +97,17 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ${{ github.workspace }}\src\App\bin\Publish\
+        asset_path: App.zip
         asset_name: App.zip
         asset_content_type: application/zip
 
-#     - name: Upload SerialPortListener Release Asset
-#       if: steps.publish.outputs.exit_code == 0
-#       uses: actions/upload-release-asset@v1
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       with:
-#         upload_url: ${{ steps.create_release.outputs.upload_url }}
-#         asset_path: ${{ github.workspace }}\src\SerialPortListener\bin\Publish\
-#         asset_name: SerialPortListener.zip
-#         asset_content_type: application/zip
+    - name: Upload SerialPortListener Release Asset
+      if: steps.publish.outputs.exit_code == 0
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: SerialPortListener.zip
+        asset_name: SerialPortListener.zip
+        asset_content_type: application/zip
