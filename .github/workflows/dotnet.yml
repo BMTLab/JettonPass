@@ -75,7 +75,7 @@ jobs:
       id: artifacts
       uses: actions/download-artifact@v1
       with:
-        name: JettonPass.zip
+        name: JettonPass
         path: ./
         
     - name: Upload Release Asset
