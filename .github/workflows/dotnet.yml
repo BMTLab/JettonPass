@@ -13,11 +13,35 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+    
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build
-      run: dotnet build --no-restore -c Relese
+      run: dotnet build --no-restore -c Release
+      
+    - name: Test
+      run: dotnet test --no-restore --no-build --verbosity normal -c Release
+      
+    - name: Publish
+      run: ./scripts/publish.ps1
+      shell: 
+        powershell
+        
+    - name: Upload App Publish Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: App
+        path: /home/runner/work/JettonPass/src/App/bin/Publish/
+        
+    - name: Upload SerialPortListener Publish Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: SerialPortListener
+        path: /home/runner/work/JettonPass/src/SerialPortListener/bin/Publish/
+
