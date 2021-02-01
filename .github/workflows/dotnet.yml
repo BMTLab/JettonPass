@@ -41,11 +41,11 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: App
-        path: D:\a\JettonPass\JettonPass\JettonPass\src\App\bin\Publish\
+        path: D:\a\JettonPass\JettonPass\src\App\bin\Publish\
         
     - name: Upload SerialPortListener Publish Artifact
       uses: actions/upload-artifact@v2
       with:
         name: SerialPortListener
-        path: D:\a\JettonPass\JettonPass\JettonPass\src\SerialPortListener\bin\Publish\
+        path: D:\a\JettonPass\JettonPass\src\SerialPortListener\bin\Publish\
 
