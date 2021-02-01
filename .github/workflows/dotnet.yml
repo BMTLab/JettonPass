@@ -59,6 +59,13 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         default_bump: patch
+        
+    - name: Download a single artifact
+      id: download
+      uses: actions/download-artifact@v2
+      with:
+        name: JettonPass
+        path: ${{ github.workspace }}
                 
     - name: Create Release
       id: create_release_windows
@@ -67,7 +74,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       with:
-        artifacts: "JettonPass.zip"
+        artifacts: "${{ github.workspace }}/JettonPass.zip"
         allowUpdates: true 
         commit: master
         name: Release ${{ steps.tag_version.outputs.new_tag }}
