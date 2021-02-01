@@ -72,19 +72,22 @@ jobs:
         body: ${{ steps.tag_version.outputs.changelog }}
         
     - name: Download publish artifacts
-      id: artifacts
-      uses: actions/download-artifact@v1
+      id: download
+      uses: actions/download-artifact@v2
       with:
         name: JettonPass
         path: ./
         
+    - name: Echo download path
+      run: echo ${{steps.download.outputs.download-path}}
+        
     - name: Upload Release Asset
-      if: steps.artifacts.outputs.exit_code == 0
+      id: upload_asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ./JettonPass.zip
+        asset_path: ${{steps.download.outputs.download-path}}
         asset_name: JettonPass.zip
         asset_content_type: application/zip
