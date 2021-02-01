@@ -31,7 +31,7 @@ jobs:
       run: dotnet test --no-restore --no-build --verbosity normal -c Release
       
     - name: Publish
-      run: ./scripts/publish.ps1
+      run: scripts/publish.ps1
       shell: 
         pwsh
         
