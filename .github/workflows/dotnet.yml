@@ -78,8 +78,7 @@ jobs:
         release_name: Release ${{ steps.tag_version.outputs.new_tag }}
         body: ${{ steps.tag_version.outputs.changelog }}
         
-    - name: Upload Release Asset
-      id: upload-release-asset
+    - name: Upload App Release Asset
       if: steps.publish.outputs.exit_code == 0
       uses: actions/upload-release-asset@v1
       env:
@@ -90,8 +89,7 @@ jobs:
         asset_name: App.zip
         asset_content_type: application/zip
 
-     - name: Upload Release Asset
-       id: upload-release-asset
+     - name: Upload SerialPortListener Release Asset
        if: steps.publish.outputs.exit_code == 0
        uses: actions/upload-release-asset@v1
        env:
