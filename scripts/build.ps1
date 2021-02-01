@@ -1,3 +1,3 @@
 ﻿$solution = "..\"
 
-& $dotnet build $solution --nologo --verbosity normal
+& dotnet build $solution --nologo --verbosity normal
