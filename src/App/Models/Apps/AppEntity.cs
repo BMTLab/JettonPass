@@ -2,7 +2,7 @@
 
 using System.Drawing;
 
-using JettonPass.App.Utils.AppUtils;
+using ProcessManager = JettonPass.App.Utils.AppUtils.ProcessManager;
 
 
 namespace JettonPass.App.Models.Apps

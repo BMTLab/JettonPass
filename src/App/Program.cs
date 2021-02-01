@@ -13,13 +13,14 @@ using JettonPass.App.Services.Configuration.Extensions;
 using JettonPass.App.Services.Managers;
 using JettonPass.App.Services.Receivers;
 using JettonPass.App.Services.Receivers.Abstractions;
-using JettonPass.App.Utils.AppUtils;
 using JettonPass.SerialPortListener;
 using JettonPass.SerialPortListener.Models.Options;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+
+using ProcessManager = JettonPass.App.Utils.AppUtils.ProcessManager;
 
 
 namespace JettonPass.App

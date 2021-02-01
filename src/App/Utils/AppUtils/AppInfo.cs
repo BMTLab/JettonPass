@@ -24,17 +24,24 @@ namespace JettonPass.App.Utils.AppUtils
         [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         public static IEnumerable<AppEntity> FindApps(DirectoryInfo baseDirectory, bool searchInSubfolders = true)
         {
-            if (searchInSubfolders)
+            try
             {
-                return baseDirectory.GetDirectories()
-                   .Select(directory => directory.GetFiles().FirstOrDefault(t => t.Extension.Equals(@".exe", StringComparison.CurrentCultureIgnoreCase)))
-                   .Where(executableFile => executableFile is not null)
+                if (searchInSubfolders)
+                {
+                    return baseDirectory.GetDirectories()
+                       .Select(directory => directory.GetFiles().FirstOrDefault(t => t.Extension.Equals(@".exe", StringComparison.CurrentCultureIgnoreCase)))
+                       .Where(executableFile => executableFile is not null)
+                       .Select(FindApp!);
+                }
+
+                return baseDirectory.GetFiles()
+                   .Where(t => t.Extension.Equals(@".exe", StringComparison.CurrentCultureIgnoreCase))
                    .Select(FindApp!);
             }
-
-            return baseDirectory.GetFiles()
-               .Where(t => t.Extension.Equals(@".exe", StringComparison.CurrentCultureIgnoreCase))
-               .Select(FindApp!);
+            catch (Exception)
+            {
+                return Enumerable.Empty<AppEntity>();
+            }
         }
     }
 }

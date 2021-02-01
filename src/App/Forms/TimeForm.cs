@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using JettonPass.App.Models.Time;
@@ -109,17 +110,17 @@ namespace JettonPass.App.Forms
         }
         
         
-        private void ManagerOnTimeEnd(object? sender, EventArgs _)
+        private async void ManagerOnTimeEnd(object? sender, EventArgs _)
         {
             SetEndTimeLabel();
-            MessageBox.Show("Время вышло");
+            await Task.Run(() => MessageBox.Show("Время вышло"));
         }
         
         
-        private void ManagerOnTimeRunsOut(object? sender, TimeChangedEventArgs e)
+        private async void ManagerOnTimeRunsOut(object? sender, TimeChangedEventArgs e)
         {
             UpdateLabel(e.NewValue);
-            //MessageBox.Show($"Время заканчивается! \r\n Осталось {e.NewValue.ToString()}");
+            await Task.Run(() => MessageBox.Show($"Время заканчивается! \r\n Осталось {e.NewValue.ToString()}"));
         }
 
 

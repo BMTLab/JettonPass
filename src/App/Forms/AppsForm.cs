@@ -39,6 +39,12 @@ namespace JettonPass.App.Forms
         private void ManagerOnTimeEnd(object? sender, EventArgs _)
         {
             SetControlsBlocked();
+            
+            foreach (AppControl control in appsContainer.Controls)
+            {
+                control.App.Shutdown();
+            }
+            
         }
         
         

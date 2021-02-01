@@ -13,15 +13,10 @@ namespace JettonPass.App.Controls
     [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(IDesigner))]
     public sealed partial class AppControl : UserControl
     {
-        #region Fields
-        private readonly AppEntity _app;
-        #endregion _Fields
-
-
         #region Ctors
         public AppControl(AppEntity app)
         {
-            _app = app;
+            App = app;
             
             InitializeComponent();
 
@@ -33,6 +28,7 @@ namespace JettonPass.App.Controls
 
         #region Properties
         public bool IsBlocked { get; set; }
+        public AppEntity App { get; }
         #endregion _Properties
 
 
@@ -41,7 +37,7 @@ namespace JettonPass.App.Controls
             if (IsBlocked)
                 return;
 
-            var process = _app.Start();
+            var process = App.Start();
 
             if (ParentForm is not null)
                 ParentForm.WindowState = FormWindowState.Maximized;

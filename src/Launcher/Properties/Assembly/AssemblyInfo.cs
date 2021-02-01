@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Jetton Pass (App)")]
+[assembly: AssemblyTitle("Jetton Pass Launcher")]
 [assembly: AssemblyProduct("JettonPass")]
 [assembly: AssemblyMetadata("Default OS", "Windows7")]
 [assembly: AssemblyCompany("BMTLab")]
@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyFileVersion("1.0")]
 [assembly: AssemblyInformationalVersion("1.0")]
-[assembly: AssemblyDescription("Application for time management through the use of jettons")]
+[assembly: AssemblyDescription("Launcher keeping track of the state of the main app")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #elif RELEASE
