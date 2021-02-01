@@ -1,4 +1,8 @@
 ﻿{
+  "LauncherOptions": {
+    "ShutdownExplorer" : false,
+    "AppPath": "\"C:\\Users\\Stimul\\Documents\\Source\\JettonPass\\src\\App\\bin\\Debug\\net5.0-windows\\win7-x64-aot\\JettonPass.exe\""
+  },
   "TimeManagerOptions": {
     "TimeAfterStartMinutes": 0.3,
     "JettonCostMinutes": 10,

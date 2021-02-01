@@ -13,7 +13,7 @@ namespace JettonPass.App.Services.Configuration.Extensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IServiceCollection AddSectionOptions<T>
-            (this IServiceCollection services, [NotNull] IConfigurationRoot configuration) where T : class, new()
+            (this IServiceCollection services, [NotNull] IConfiguration configuration) where T : class, new()
         {
             if (configuration is null)
                 throw new ArgumentNullException(nameof(configuration));
@@ -23,7 +23,7 @@ namespace JettonPass.App.Services.Configuration.Extensions
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T GetFrom<T>([NotNull] this IConfigurationRoot configuration) where T : class, new()
+        public static T GetFrom<T>([NotNull] this IConfiguration configuration) where T : class, new()
         {
             if (configuration is null)
                 throw new ArgumentNullException(nameof(configuration));

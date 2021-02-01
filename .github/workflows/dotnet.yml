@@ -40,17 +40,29 @@ jobs:
       run: |
         cd scripts
         ./publish.ps1
+        cd ${{ github.workspace }}
         echo ::set-output name=exit_code::$?
       shell: 
+        pwsh
+      
+    - name: Pack
+      id: pack
+      if: steps.test.outputs.exit_code == 0
+      run: |
+        cd scripts
+        ./pack.ps1
+        cd ${{ github.workspace }}
+        echo ::set-output name=exit_code::$?
+      shell:
         pwsh
         
     - name: Upload Publish Artifact
       id: upload_app
       if: steps.publish.outputs.exit_code == 0
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@master
       with:
         name: JettonPass
-        path: ${{ github.workspace }}\Publish\
+        path: ${{ github.workspace }}\build
                 
     - name: Bump version and push tag
       id: tag_version
@@ -58,9 +70,15 @@ jobs:
       uses: mathieudutour/github-tag-action@v5.1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        default_bump: major
+        default_bump: patch
         
-    - name: Create a GitHub release
+#    - name: Download a single artifact
+#      id: download
+#      uses: actions/download-artifact@v2
+#      with:
+#        name: JettonPass
+        
+    - name: Create a GitHub Release
       id: create_release
       if: steps.publish.outputs.exit_code == 0
       uses: actions/create-release@v1
@@ -70,20 +88,14 @@ jobs:
         tag_name: ${{ steps.tag_version.outputs.new_tag }}
         release_name: Release ${{ steps.tag_version.outputs.new_tag }}
         body: ${{ steps.tag_version.outputs.changelog }}
-        
-    - name: Download publish artifacts
-      uses: actions/download-artifact@v1
-      with:
-        name: JettonPass
-        path: ./
-        
-    - name: Upload App Release Asset
+                
+    - name: Upload Release Asset
       if: steps.publish.outputs.exit_code == 0
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: JettonPass.zip
+        asset_path: ${{ github.workspace }}/JettonPass.zip
         asset_name: JettonPass.zip
         asset_content_type: application/zip

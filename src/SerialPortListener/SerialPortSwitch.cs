@@ -95,6 +95,9 @@ namespace JettonPass.SerialPortListener
 
 
         #region Methods
+        public static bool IsAnyPortsOnSystem() =>
+            SerialPort.GetPortNames().Any();
+        
         public void Start()
         {
             if (IsRunning)
@@ -213,10 +216,6 @@ namespace JettonPass.SerialPortListener
                 PinType.None => throw new ArgumentOutOfRangeException(nameof(pinType)),
                 var _    => throw new ArgumentOutOfRangeException(nameof(pinType))
             };
-
-
-        private static bool IsAnyPortsOnSystem() =>
-            SerialPort.GetPortNames().Any();
         #endregion _Methods
     }
 }

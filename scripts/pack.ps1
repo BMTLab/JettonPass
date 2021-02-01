@@ -1,3 +1,3 @@
-﻿$output = "..\Publish"
+﻿$output = "..\build"
 
-Compress-Archive -Path $output\* -DestinationPath "JettonPass.zip" -Update
+Compress-Archive -Path $output\* -DestinationPath "..\JettonPass.zip" -Update
