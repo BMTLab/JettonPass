@@ -41,7 +41,7 @@
         <Optimize>true</Optimize>
 
         <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-        <SelfContained>true</SelfContained>
+        <SelfContained>false</SelfContained>
         <PublishReadyToRun>true</PublishReadyToRun>
         <PublishSingleFile>true</PublishSingleFile>
         <PublishTrimmed>false</PublishTrimmed>
