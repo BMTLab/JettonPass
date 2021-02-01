@@ -3,6 +3,8 @@ name: .NET
 on:
   push:
     branches: [ master ]
+    tags: 
+      - 'v1.*'
   pull_request:
     branches: [ master ]
 
@@ -31,7 +33,7 @@ jobs:
     - name: Publish
       run: ./scripts/publish.ps1
       shell: 
-        powershell
+        pwsh
         
     - name: Upload App Publish Artifact
       uses: actions/upload-artifact@v2
