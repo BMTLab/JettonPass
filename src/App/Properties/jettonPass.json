@@ -1,4 +1,8 @@
 ﻿{
+  "LauncherOptions": {
+    "ShutdownExplorer" : true,
+    "AppPath": "JettonPass.exe"
+  },
   "AppManagerOptions": {
     "UseBasePath": true,
     "BasePath": "C:/Games",

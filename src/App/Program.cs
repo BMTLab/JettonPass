@@ -1,4 +1,4 @@
-//#define TEST
+#define TEST
 
 using System;
 using System.ComponentModel;
@@ -70,8 +70,6 @@ namespace JettonPass.App
         [STAThread]
         private static void Main()
         {
-            ShutdownExplorer();
-            
             new Thread(() => Application.Run(ServiceProvider.GetService<AppsForm>()))
             {
                 Name = nameof(AppsForm),
@@ -81,7 +79,7 @@ namespace JettonPass.App
             new Thread(() => Application.Run(ServiceProvider.GetService<TimeForm>()))
             {
                 Name = nameof(TimeForm),
-                IsBackground = true
+                IsBackground = false
             }.Start();
         }
 
@@ -96,8 +94,11 @@ namespace JettonPass.App
             
             services.AddSingleton(sp => new SerialPortSwitch(sp.GetRequiredService<IOptions<SerialPortOptions>>().Value));
 
-            #if TEST
-            services.AddSingleton<IJettonReceiver, TestReceiver>();
+            #if DEBUG || TEST
+            if (!SerialPortSwitch.IsAnyPortsOnSystem())
+                services.AddSingleton<IJettonReceiver, TestReceiver>();
+            else
+                services.AddSingleton<IJettonReceiver, SerialPortReceiver>();
             #else
              services.AddSingleton<IJettonReceiver, SerialPortReceiver>();
             #endif
@@ -106,11 +107,6 @@ namespace JettonPass.App
             services.AddSingleton<AppsForm>();
             services.AddSingleton<TimeForm>();
         }
-
-
-        [Conditional("RELEASE")]
-        private static void ShutdownExplorer() =>
-            ProcessManager.Shutdown("explorer.exe");
         #endregion _Methods
     }
 }

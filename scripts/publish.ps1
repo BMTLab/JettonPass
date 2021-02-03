@@ -1,4 +1,4 @@
-﻿$output = "..\Publish"
+﻿$output = "..\build"
 $projects = @(
     "..\src\SerialPortListener"
 	"..\src\Launcher"

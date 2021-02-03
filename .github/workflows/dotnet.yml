@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     
-    runs-on: 'windows-2016'
+    runs-on: 'windows-latest'
 
     steps:
     - uses: actions/checkout@v2
@@ -40,8 +40,20 @@ jobs:
       run: |
         cd scripts
         ./publish.ps1
+        cd ${{ github.workspace }}
         echo ::set-output name=exit_code::$?
       shell: 
+        pwsh
+      
+    - name: Pack
+      id: pack
+      if: steps.test.outputs.exit_code == 0
+      run: |
+        cd scripts
+        ./pack.ps1
+        cd ${{ github.workspace }}
+        echo ::set-output name=exit_code::$?
+      shell:
         pwsh
         
     - name: Upload Publish Artifact
@@ -50,7 +62,7 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: JettonPass
-        path: ${{ github.workspace }}\Publish
+        path: ${{ github.workspace }}\build
                 
     - name: Bump version and push tag
       id: tag_version
@@ -60,11 +72,11 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         default_bump: patch
         
-    - name: Download a single artifact
-      id: download
-      uses: actions/download-artifact@v2
-      with:
-        name: JettonPass
+#    - name: Download a single artifact
+#      id: download
+#      uses: actions/download-artifact@v2
+#      with:
+#        name: JettonPass
         
     - name: Create a GitHub Release
       id: create_release
@@ -84,6 +96,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ./JettonPass.zip
+        asset_path: ${{ github.workspace }}/JettonPass.zip
         asset_name: JettonPass.zip
         asset_content_type: application/zip
