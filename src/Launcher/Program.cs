@@ -9,7 +9,6 @@ using JettonPass.App.Utils.AppUtils;
 using JettonPass.Launcher.Models.Options;
 
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 
 namespace JettonPass.Launcher
@@ -18,7 +17,7 @@ namespace JettonPass.Launcher
     {
         #region Fields
         internal static readonly IConfiguration Configuration;
-        internal static readonly ServiceProvider ServiceProvider;
+        //internal static readonly ServiceProvider ServiceProvider;
         #endregion _Fields
         
         
@@ -39,24 +38,23 @@ namespace JettonPass.Launcher
                 #endif
                .Build();
 
-            var serviceCollection = new ServiceCollection();
+            /*var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
-            ServiceProvider = serviceCollection.BuildServiceProvider();
+            ServiceProvider = serviceCollection.BuildServiceProvider();*/
 
             GC.Collect();
         }
 
 
         #region Methods
-        public static void ConfigureServices(IServiceCollection services)
+        /*public static void ConfigureServices(IServiceCollection services)
         {
             services.AddSectionOptions<LauncherOptions>(Configuration);
-        }
+        }*/
         
         public static async Task Main()
         {
-            var launcherOptions = new LauncherOptions();
-            Configuration.GetSection(nameof(LauncherOptions)).Bind(launcherOptions);
+            var launcherOptions = Configuration.GetFrom<LauncherOptions>();
             
             if (launcherOptions.ShutdownExplorer)
                 ShutdownExplorer();
