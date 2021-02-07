@@ -1,17 +1,26 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 
 
 namespace JettonPass.App.Utils.AppUtils
 {
-    public static class ProcessManager
+    public static class ProcessUtils
     {
         #region Methods
-        public static Process? Start(string fileName)
+        public static System.Diagnostics.Process? GetMainWindowProcess(string processName)
+        {
+            var processes = System.Diagnostics.Process.GetProcessesByName(processName);
+
+            return processes.FirstOrDefault(process => process.MainWindowHandle != IntPtr.Zero);
+        }
+        
+        
+        public static System.Diagnostics.Process? Start(string fileName)
         {
             try
             {
-                return Process.Start
+                return System.Diagnostics.Process.Start
                 (
                     new ProcessStartInfo
                     {
@@ -29,7 +38,7 @@ namespace JettonPass.App.Utils.AppUtils
         }
 
 
-        public static void Shutdown(Process? runningProcess)
+        public static void Shutdown(System.Diagnostics.Process? runningProcess)
         {
             try
             {
@@ -40,7 +49,7 @@ namespace JettonPass.App.Utils.AppUtils
 
                 if (!isSafeClosed)
                 {
-                    using var killProcess = Process.Start
+                    using var killProcess = System.Diagnostics.Process.Start
                     (
                         new ProcessStartInfo
                         {
@@ -67,7 +76,7 @@ namespace JettonPass.App.Utils.AppUtils
                 if (string.IsNullOrWhiteSpace(nameProcess))
                     return;
 
-                using var killProcess = Process.Start
+                using var killProcess = System.Diagnostics.Process.Start
                 (
                     new ProcessStartInfo
                     {

@@ -17,9 +17,9 @@ namespace JettonPass.App.Services.Receivers
         public TestReceiver()
         {
             var rnd = new Random();
-            _delayBefore = rnd.Next(5000, 10000);
-            
-            //OnReceive();
+            _delayBefore = rnd.Next(10000, 15000);
+
+            OnReceive();
         }
         #endregion
 

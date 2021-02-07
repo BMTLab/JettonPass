@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Windows.Forms;
+using System.Timers;
 
 using JettonPass.App.Models.Options;
 using JettonPass.App.Models.Time;
+using JettonPass.App.Models.Time.States.Abstractions;
 using JettonPass.App.Services.Receivers.Abstractions;
 
 using Microsoft.Extensions.Options;
@@ -13,125 +14,79 @@ namespace JettonPass.App.Services.Managers
     public class TimeManager : IDisposable
     {
         #region Consts&Fields
-        private const int OneSecond = 1000;
+        public const int OneSecond = 1000;
         
-        internal readonly TimeSpan DiscreteUnit = TimeSpan.FromMilliseconds(OneSecond);
-
-        private readonly TimeManagerOptions _options;
-        private readonly Timer _timer;
+        public readonly TimeSpan DiscreteUnit;
         private readonly IJettonReceiver _jettonReceiver;
-
-        private TimeSpan _leftTime;
-        private bool _isNotifiedLackTime;
-        private bool _isNotifiedEndTime;
+        private readonly Timer _timer;
         #endregion _Consts&Fields
 
 
         #region Ctors
         public TimeManager(IJettonReceiver jettonReceiver, IOptions<TimeManagerOptions> options)
         {
-            _options = options.Value;
+            Options = options.Value;
 
             _jettonReceiver = jettonReceiver;
             _jettonReceiver.JettonPassed += ReceiverOnPassed;
 
-            LeftTime = TimeSpan.FromMinutes(_options.TimeAfterStartMinutes);
-            JettonCost = TimeSpan.FromMinutes(_options.JettonCostMinutes);
+            DiscreteUnit = TimeSpan.FromMilliseconds(OneSecond);
+            LeftTime = TimeSpan.FromMinutes(Options.TimeAfterStartMinutes);
+            JettonCost = TimeSpan.FromMinutes(Options.JettonCostMinutes);
+            State = TimeStateFactory.CreateNew(this);
             
-
-            _timer = new Timer
+            _timer = new Timer(OneSecond)
             {
-                Interval = OneSecond,
-                Enabled = _options.SubtractingTimeEnabled
+                Enabled = Options.SubtractingTimeEnabled
             };
 
-            _timer.Tick += TimerOnTick;
+            _timer.Elapsed += TimerOnTick;
         }
         #endregion
 
 
         #region Properties
-        public TimeSpan LeftTime
-        {
-            get => _leftTime;
-            protected set
-            {
-                if (_leftTime == value)
-                    return;
-                
-                _leftTime = value;
-
-                UpdateTime(value);
-            }
-        }
-
+        public TimeSpan LeftTime { get; private set; }
+        public TimeState State { get; private set; }
         public TimeSpan JettonCost { get; }
-        public bool NoTime { get; private set; } = true;
+        public TimeManagerOptions Options { get; }
+
         #endregion _Properties
 
 
         #region Events
+        public event EventHandler<TimeChangedEventArgs> StateChanged = delegate { };
+        public event EventHandler<TimeChangedEventArgs> StateChanging = delegate { };
         public event EventHandler<TimeChangedEventArgs> TimeChanged = delegate { };
-        public event EventHandler<TimeChangedEventArgs> TimeRunsOut = delegate { };
-        public event EventHandler<TimeChangedEventArgs> TimeEnd = delegate { };
         #endregion _Events
 
 
         #region Methods
+        public void TransitionTo(TimeState state)
+        {
+            StateChanging.Invoke(this, new TimeChangedEventArgs(LeftTime, state));
+            State = state;
+            State.SetContext(this);
+            StateChanged.Invoke(this, new TimeChangedEventArgs(LeftTime, state));
+        }
+        
         public void UpdateTime(TimeSpan newTime)
         {
-            _leftTime = newTime;
-            
-            NoTime = LeftTime <= DiscreteUnit;
-
-            if (NoTime)
-            {
-                _leftTime = TimeSpan.Zero;
-            }
-            
-            var args = new TimeChangedEventArgs(_leftTime);
-            TimeChanged.Invoke(this, args);
-
-            
-            if (!_isNotifiedEndTime && NoTime)
-            {
-                _isNotifiedEndTime = true;
-                TimeEnd.Invoke(this, args);
-            }
-            
-            if (!_isNotifiedLackTime && _leftTime <= TimeSpan.FromMinutes(_options.TimeRunsOutThresholdMinutes))
-            {
-                _isNotifiedLackTime = true;
-                TimeRunsOut.Invoke(this, args);
-            }
-
-            if (_isNotifiedLackTime && _leftTime > TimeSpan.FromMinutes(_options.TimeRunsOutThresholdMinutes))
-            {
-                _isNotifiedLackTime = false;
-            }
-            
-            if (_isNotifiedEndTime && !NoTime)
-            {
-                _isNotifiedEndTime = false;
-            }
+            LeftTime = newTime;
+            State.UpdateTime();
+            TimeChanged.Invoke(this, new TimeChangedEventArgs(LeftTime, State));
         }
-        
-        private void OnLeftTimeChanged(TimeSpan newTime)
+                
+        private void ReceiverOnPassed(object? _, EventArgs e)
         {
-            UpdateTime(_leftTime - newTime);
+            UpdateTime(LeftTime + JettonCost);
         }
         
         
-        private void ReceiverOnPassed(object? sender, EventArgs _)
-        {
-            UpdateTime(_leftTime + JettonCost);
-        }
-        
-        
-        private void TimerOnTick(object? sender, EventArgs _)
+        private void TimerOnTick(object? _, EventArgs e)
         {
             if (LeftTime >= DiscreteUnit)
-                UpdateTime(_leftTime - DiscreteUnit);
+                UpdateTime(LeftTime - DiscreteUnit);
         }
         #endregion _Methods
         
@@ -154,19 +109,13 @@ namespace JettonPass.App.Services.Managers
             if (disposing)
             {
                 _jettonReceiver.JettonPassed -= ReceiverOnPassed;
-                _timer.Tick -= TimerOnTick;
+                _timer.Elapsed -= TimerOnTick;
                 
                 _timer.Stop();
                 _timer.Dispose();
             }
 
             _isDisposed = true;
-        }
-
-
-        ~TimeManager()
-        {
-            Dispose(false);
         }
         #endregion
     }

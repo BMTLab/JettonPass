@@ -6,7 +6,7 @@ namespace JettonPass.App.Models.WinApiEnums
     [SuppressMessage("Enum must not have duplicate values", "CA1069")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public enum GetWindowLongConst
+    public enum GetWindowLongConst : int
     {
         NONE = 0,
         GWL_WNDPROC = -4,

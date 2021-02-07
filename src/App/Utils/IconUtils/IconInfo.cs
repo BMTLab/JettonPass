@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -18,4 +18,4 @@ namespace JettonPass.App.Utils.IconUtils
             return ico;
         }
     }
-}
+}*/

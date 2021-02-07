@@ -4,9 +4,9 @@
     "AppPath": "\"C:\\Users\\Stimul\\Documents\\Source\\JettonPass\\src\\App\\bin\\Debug\\net5.0-windows\\win7-x64-aot\\JettonPass.exe\""
   },
   "TimeManagerOptions": {
-    "TimeAfterStartMinutes": 0.3,
+    "TimeAfterStartMinutes": 0.2,
     "JettonCostMinutes": 10,
     "SubtractingTimeEnabled": true,
-    "TimeRunsOutThresholdMinutes": 3
+    "TimeRunsOutThresholdMinutes": 0.1
   }
 }

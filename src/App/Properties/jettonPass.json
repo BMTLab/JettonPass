@@ -4,10 +4,10 @@
     "AppPath": "JettonPass.exe"
   },
   "AppManagerOptions": {
-    "UseBasePath": true,
+    "UseBasePath": false,
     "BasePath": "C:/Games",
-    "SearchInSubfolders": true,
-    "CustomPaths": []
+    "SearchInSubfolders": false,
+    "CustomPaths": ["C:\\Games\\MiniGolfSimulator\\_MiniGolfSimulator_.exe"]
   },
   "TimeManagerOptions": {
     "TimeAfterStartMinutes": 0,

@@ -2,17 +2,18 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Threading;
-using System.Windows.Forms;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
-using JettonPass.App.Forms;
 using JettonPass.App.Models.Options;
+using JettonPass.App.Overlays;
 using JettonPass.App.Services.Configuration.Extensions;
 using JettonPass.App.Services.Managers;
 using JettonPass.App.Services.Receivers;
 using JettonPass.App.Services.Receivers.Abstractions;
+using JettonPass.App.Utils.AppUtils;
+using JettonPass.App.Utils.WindowUtils;
 using JettonPass.SerialPortListener;
 using JettonPass.SerialPortListener.Models.Options;
 
@@ -20,7 +21,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-using ProcessManager = JettonPass.App.Utils.AppUtils.ProcessManager;
+using Process.NET;
+using Process.NET.Memory;
+
+using Application = System.Windows.Forms.Application;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 
 namespace JettonPass.App
@@ -35,11 +40,7 @@ namespace JettonPass.App
                 MessageBox.Show($@"FATAL: {(Exception) e.ExceptionObject}");
                 Application.Exit(new CancelEventArgs(true));
             };
-
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.SetCompatibleTextRenderingDefault(false);
-
-
+            
             Configuration = new ConfigurationBuilder()
                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), @"Properties"))
                .AddJsonFile(@"jettonPass.json", false, false)
@@ -59,7 +60,7 @@ namespace JettonPass.App
 
         #region Fileds
         internal static readonly ServiceProvider ServiceProvider;
-        internal static readonly IConfigurationRoot Configuration;
+        internal static readonly IConfiguration Configuration;
         #endregion
 
 
@@ -68,29 +69,29 @@ namespace JettonPass.App
         ///     The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main()
+        private static async Task Main()
         {
-            new Thread(() => Application.Run(ServiceProvider.GetService<AppsForm>()))
-            {
-                Name = nameof(AppsForm),
-                IsBackground = false
-            }.Start();
+            var appManager = ServiceProvider.GetRequiredService<AppManager>();
+            appManager.RunApp();
+
+            var overlayManager = ServiceProvider.GetRequiredService<OverlayManager>();
+            await overlayManager.InitializeAsync();
             
-            new Thread(() => Application.Run(ServiceProvider.GetService<TimeForm>()))
-            {
-                Name = nameof(TimeForm),
-                IsBackground = false
-            }.Start();
+            CursorUtils.ToggleMouseCursorVisibility();
+
+            await WaitForExitAsync();
+            overlayManager.Dispose();
+            appManager.Dispose();
         }
 
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddSectionOptions<TimeManagerOptions>(Configuration);
             services.AddSectionOptions<AppManagerOptions>(Configuration);
             services.AddSectionOptions<SerialPortReceiverOptions>(Configuration);
             services.AddSectionOptions<SerialPortOptions>(Configuration);
-            
             
             services.AddSingleton(sp => new SerialPortSwitch(sp.GetRequiredService<IOptions<SerialPortOptions>>().Value));
 
@@ -104,8 +105,15 @@ namespace JettonPass.App
             #endif
             services.AddSingleton<TimeManager>();
             services.AddSingleton<AppManager>();
-            services.AddSingleton<AppsForm>();
-            services.AddSingleton<TimeForm>();
+            services.AddSingleton<OverlayManager>();
+        }
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static async ValueTask WaitForExitAsync()
+        {
+            var currentProcess = System.Diagnostics.Process.GetCurrentProcess();
+            await currentProcess.WaitForExitAsync();
         }
         #endregion _Methods
     }
