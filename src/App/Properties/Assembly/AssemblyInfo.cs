@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("BMTLab ®")]
 [assembly: AssemblyDefaultAlias("JettonPass")]
 [assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("2.0.0.*")]
 [assembly: AssemblyFileVersion("1.0")]
-[assembly: AssemblyInformationalVersion("1.0")]
+[assembly: AssemblyInformationalVersion("1.0.*")]
 [assembly: AssemblyDescription("Application for time management through the use of jettons")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]

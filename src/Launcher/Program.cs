@@ -1,8 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
 
 using JettonPass.App.Services.Configuration.Extensions;
 using JettonPass.App.Utils.AppUtils;
@@ -26,8 +25,7 @@ namespace JettonPass.Launcher
             AppDomain.CurrentDomain.UnhandledException += (_, e) =>
             {
                 MessageBox.Show($@"LAUNCHER FATAL: {(Exception) e.ExceptionObject}");
-                ProcessManager.Start("explorer.exe");
-                Application.Exit(new CancelEventArgs(true));
+                ProcessUtils.Start("explorer.exe");
             };
             
             Configuration = new ConfigurationBuilder()
@@ -37,21 +35,12 @@ namespace JettonPass.Launcher
                .AddJsonFile(@"jettonPass.Debug.json", false, false)
                 #endif
                .Build();
-
-            /*var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
-            ServiceProvider = serviceCollection.BuildServiceProvider();*/
-
+            
             GC.Collect();
         }
 
 
         #region Methods
-        /*public static void ConfigureServices(IServiceCollection services)
-        {
-            services.AddSectionOptions<LauncherOptions>(Configuration);
-        }*/
-        
         public static async Task Main()
         {
             var launcherOptions = Configuration.GetFrom<LauncherOptions>();
@@ -59,7 +48,7 @@ namespace JettonPass.Launcher
             if (launcherOptions.ShutdownExplorer)
                 ShutdownExplorer();
 
-            var process = ProcessManager.Start(launcherOptions.AppPath);
+            var process = ProcessUtils.Start(launcherOptions.AppPath);
 
             while (true)
             {
@@ -70,7 +59,7 @@ namespace JettonPass.Launcher
         
 
         private static void ShutdownExplorer() =>
-            ProcessManager.Shutdown("explorer.exe");
+            ProcessUtils.Shutdown("explorer.exe");
         #endregion _Methods
     }
 }
